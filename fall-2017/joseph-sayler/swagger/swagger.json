@@ -1,383 +1,557 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "Simple task creation API",
-    "version" : "1.0.0",
-    "title" : "Simple Task API",
-    "contact" : {
-      "email" : "joseph.sayler@gmail.com"
+    "swagger": "2.0",
+    "info": {
+        "description": "Simple task creation API",
+        "version": "1.0.0",
+        "title": "Simple Task API",
+        "contact": {
+            "email": "joseph.sayler@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "tags": [
+        {
+            "name": "users",
+            "description": "Operations to perform on users"
+        },
+        {
+            "name": "tasks",
+            "description": "Operations to perform on tasks"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Retreive all users",
+                "description": "Takes in no parameter, returns all users",
+                "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "integer",
+                                    "description": "user's ID",
+                                    "example": 1235467890
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "user's first name",
+                                    "example": "John"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "user's last name",
+                                    "example": "Smith"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new user",
+                "description": "Add a new user to the system",
+                "operationId": "addUser",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "newUser",
+                        "description": "new user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "integer",
+                                    "description": "user's ID",
+                                    "example": 1235467890
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "user's first name",
+                                    "example": "John"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "user's last name",
+                                    "example": "Smith"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "integer",
+                                    "description": "user's ID",
+                                    "example": 1235467890
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Search user ID",
+                "description": "Search for a user by their user ID",
+                "operationId": "getUserId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "integer",
+                                    "description": "user's ID",
+                                    "example": 1235467890
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "user's first name",
+                                    "example": "John"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "user's last name",
+                                    "example": "Smith"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user info",
+                "description": "Change information about a user",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "type": "integer",
+                        "description": "user's ID",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "updateUser",
+                        "description": "update user info",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "type": "string",
+                                    "description": "user's first name",
+                                    "example": "John"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "description": "user's last name",
+                                    "example": "Smith"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user info",
+                "description": "Remove a user from the system",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/users/{userId}/tasks": {
+            "get": {
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Display user's tasks",
+                "description": "Display a list of all the user's tasks",
+                "operationId": "getTasks",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Task"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Add task to list",
+                "description": "Add a new task to the user's task list",
+                "operationId": "addTask",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "type": "integer",
+                        "description": "user's ID",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "newTask",
+                        "description": "task object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "taskId": {
+                                    "type": "integer",
+                                    "description": "task id",
+                                    "example": 987654321
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "description": "task title",
+                                    "example": "Take out garbage"
+                                },
+                                "dueDate": {
+                                    "type": "integer",
+                                    "description": "task due date",
+                                    "example": 20171116
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "enum": [
+                                        "New",
+                                        "In Progress",
+                                        "Complete",
+                                        "Overdue"
+                                    ],
+                                    "default": "New"
+                                },
+                                "userId": {
+                                    "type": "integer",
+                                    "description": "user id",
+                                    "example": 1234567890
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "taskId": {
+                                    "type": "integer",
+                                    "description": "user's ID",
+                                    "example": 987654321
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            }
+        },
+        "/users/{userId}/tasks/{taskId}": {
+            "get": {
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Find a task",
+                "description": "Look up a user's task by ID",
+                "operationId": "taskIdSearch",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "task ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Update user task",
+                "description": "Make changes to a user's task",
+                "operationId": "updateTask",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "task ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "updateTask",
+                        "description": "task object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "description": "task title",
+                                    "example": "Take out garbage"
+                                },
+                                "dueDate": {
+                                    "type": "integer",
+                                    "example": 20171116
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "enum": [
+                                        "New",
+                                        "In Progress",
+                                        "Complete",
+                                        "Overdue"
+                                    ],
+                                    "default": "New"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Delete a user's task",
+                "description": "delete task",
+                "operationId": "deleteTask",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "user's ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "task ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "required": [
+                "userId"
+            ],
+            "properties": {
+                "userId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1234567890
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Smith"
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Task"
+                    }
+                }
+            }
+        },
+        "Task": {
+            "required": [
+                "taskId"
+            ],
+            "properties": {
+                "taskId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 987654321
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Take out garbage"
+                },
+                "dueDate": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 20171116
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "New",
+                        "In Progress",
+                        "Complete",
+                        "Overdue"
+                    ],
+                    "default": "New"
+                },
+                "userId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1234567890
+                }
+            }
+        }
     }
-  },
-  "tags" : [ {
-    "name" : "users",
-    "description" : "Operations to perform on users"
-  }, {
-    "name" : "tasks",
-    "description" : "Operations to perform on tasks"
-  } ],
-  "schemes" : [ "http" ],
-  "paths" : {
-    "/users" : {
-      "get" : {
-        "tags" : [ "users" ],
-        "summary" : "Search for users by user name",
-        "description" : "Look up users by their user names",
-        "operationId" : "userSearch",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "searchString",
-          "in" : "query",
-          "description" : "username to search",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/User"
-              }
-            }
-          },
-          "400" : {
-            "description" : "invalid input"
-          },
-          "404" : {
-            "description" : "users not found"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "users" ],
-        "summary" : "Add new users to the system",
-        "description" : "Add a user",
-        "operationId" : "userAdd",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "newUser",
-          "description" : "new user to add",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "user created"
-          },
-          "400" : {
-            "description" : "invalid input"
-          },
-          "409" : {
-            "description" : "user already exists"
-          }
-        }
-      }
-    },
-    "/users/{userId}" : {
-      "get" : {
-        "tags" : [ "users" ],
-        "summary" : "Query a user id",
-        "description" : "Search by user id",
-        "operationId" : "userIdSearch",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "id to look up",
-          "required" : true,
-          "type" : "integer"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "user found",
-            "schema" : {
-              "$ref" : "#/definitions/User"
-            }
-          },
-          "400" : {
-            "description" : "invalid input"
-          },
-          "404" : {
-            "description" : "user id not found"
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "users" ],
-        "summary" : "Update user information",
-        "description" : "update user info",
-        "operationId" : "updateUserInfo",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "updateUser",
-          "description" : "update user info",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/User"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "user updated"
-          },
-          "400" : {
-            "description" : "invalid ID"
-          },
-          "404" : {
-            "description" : "user ID not found"
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "users" ],
-        "summary" : "Delete user from system",
-        "description" : "delete user ID",
-        "operationId" : "deleteUser",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "api_key",
-          "in" : "header",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "userId",
-          "in" : "path",
-          "description" : "user ID to delete",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "user deleted successfully"
-          },
-          "400" : {
-            "description" : "invalid ID supplied"
-          },
-          "404" : {
-            "description" : "user ID not found"
-          }
-        }
-      }
-    },
-    "/users/{id}/tasks" : {
-      "get" : {
-        "tags" : [ "tasks" ],
-        "summary" : "Look up a user's tasks",
-        "description" : "find user's tasks",
-        "operationId" : "taskSearch",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "user ID",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "taskName",
-          "in" : "query",
-          "description" : "task to find",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Task"
-              }
-            }
-          },
-          "400" : {
-            "description" : "bad input"
-          },
-          "404" : {
-            "description" : "task not found"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "tasks" ],
-        "summary" : "Add a task to the system",
-        "description" : "add new task",
-        "operationId" : "taskAdd",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "newTask",
-          "description" : "new task to add",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Task"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "task created"
-          },
-          "400" : {
-            "description" : "invalid input"
-          }
-        }
-      }
-    },
-    "/users/{id}/tasks/{id}" : {
-      "get" : {
-        "tags" : [ "tasks" ],
-        "summary" : "Look up a task by ID",
-        "description" : "find a task",
-        "operationId" : "taskIdSearch",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "user ID",
-          "required" : true,
-          "type" : "integer"
-        }, {
-          "name" : "taskName",
-          "in" : "query",
-          "description" : "find a task",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "task found",
-            "schema" : {
-              "$ref" : "#/definitions/Task"
-            }
-          },
-          "400" : {
-            "description" : "bad input"
-          },
-          "404" : {
-            "description" : "task not found"
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "tasks" ],
-        "summary" : "Update a user's task",
-        "description" : "update task",
-        "operationId" : "updateTask",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "updateTask",
-          "description" : "task to update",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Task"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "task updated"
-          },
-          "400" : {
-            "description" : "invalid ID"
-          },
-          "404" : {
-            "description" : "task ID not found"
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "tasks" ],
-        "summary" : "Delete a user's task",
-        "description" : "delete task",
-        "operationId" : "deleteTask",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "api_key",
-          "in" : "header",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "path",
-          "description" : "task ID to delete",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "deleted successfully"
-          },
-          "400" : {
-            "description" : "invalid ID supplied"
-          },
-          "404" : {
-            "description" : "task ID not found"
-          }
-        }
-      }
-    }
-  },
-  "definitions" : {
-    "User" : {
-      "type" : "object",
-      "required" : [ "userId", "userName" ],
-      "properties" : {
-        "userId" : {
-          "type" : "integer",
-          "format" : "int64",
-          "example" : 1234567890
-        },
-        "userName" : {
-          "type" : "string",
-          "example" : "spiderman64"
-        },
-        "firstName" : {
-          "type" : "string",
-          "example" : "John"
-        },
-        "lastName" : {
-          "type" : "string",
-          "example" : "Smith"
-        },
-        "tasks" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/Task"
-          }
-        }
-      }
-    },
-    "Task" : {
-      "required" : [ "taskId", "taskName" ],
-      "properties" : {
-        "taskId" : {
-          "type" : "integer",
-          "format" : "int64",
-          "example" : 987654321
-        },
-        "taskName" : {
-          "type" : "string",
-          "example" : "Take out garbage"
-        },
-        "complete" : {
-          "type" : "boolean",
-          "default" : false
-        }
-      }
-    }
-  }
 }
